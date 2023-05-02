@@ -1,0 +1,28 @@
+﻿@model System.String
+@{
+}
+
+
+<h2>@ViewBag.About</h2>
+<div class="form-group">
+@if (User.IsInRole("Admin"))
+{
+    <form asp-action="About" asp-controller="Home" method="post">
+        <label>Text</label><br/>
+            <textarea class="my-textarea" name="text" >@ViewBag.About</textarea>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+}
+</div>
+
+<style>
+    .my-textarea {
+        width: 100%;
+        height: 250px;
+        font-size: 18px;
+        line-height: 1.5;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+</style>

@@ -1,0 +1,12 @@
+<Table>
+    <tr>
+        <th>URL</th>
+        <th>Short URL</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let url of urls">
+        <td>{{url.longUrl}}</td>
+        <td>{{url.shortUrl}}</td>
+        <td><a [routerLink]="['/urls', url.id]">Details</a></td>
+    </tr>
+</Table>

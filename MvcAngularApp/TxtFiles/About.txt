@@ -1,0 +1,1 @@
+﻿This algorithm computes the SHA-256 hash and takes the first 12 chars.

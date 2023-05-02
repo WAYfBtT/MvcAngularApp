@@ -1,0 +1,4 @@
+.ulrDetails{
+    display: flex;
+    flex-direction: column;
+}

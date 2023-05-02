@@ -1,0 +1,19 @@
+<h2>User Details</h2>
+<div class="ulr-details" *ngIf="url">
+    <div class="details-item">
+        <label>ID: </label>
+        <label>{{url.id}}</label>
+    </div>
+    <div class="details-item">
+        <label>Long URL: </label>
+        <label>{{url.longUrl}}</label>
+    </div>
+    <div class="details-item">
+        <label>Short URL: </label>
+        <label>{{url.shortUrl}}</label>
+    </div>
+    <div class="details-item">
+        <label>Created At Utc: </label>
+        <label>{{url.createdAtUtc}}</label>
+    </div>
+</div>
