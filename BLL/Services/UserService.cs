@@ -27,7 +27,8 @@ namespace BLL.Services
         {
             var entity = _mapper.Map<User>(model);
             if (await _unitOfWork.UserRepository.AnyAsync(x => x.UsernameNormalized == entity.UsernameNormalized))
-                throw new UrlShortenerApplicationException("User with such username already exist.");
+                throw new UrlShortenerApplicationException
+                    (new Dictionary<string, List<string>> { ["Username"] = new List<string> { "User with such username already exist." } });
             _unitOfWork.UserRepository.Add(entity);
             await _unitOfWork.SaveChangesAsync();
             return entity.Id;
@@ -36,7 +37,8 @@ namespace BLL.Services
         public async Task DeleteByIdAsync(int id)
         {
             if (await _unitOfWork.UserRepository.AnyAsync(x => x.Id == id))
-                throw new UrlShortenerApplicationException("User with such id does not exist.");
+                throw new UrlShortenerApplicationException
+                    (new Dictionary<string, List<string>> { ["Id"] = new List<string> { "User with such id does not exist." } });
 
             await _unitOfWork.UserRepository.DeleteByIdAsync(id);
             await _unitOfWork.SaveChangesAsync();
@@ -46,7 +48,8 @@ namespace BLL.Services
         {
             var entity = _mapper.Map<User>(model);
             if (await _unitOfWork.UserRepository.AnyAsync(x => x.Id == model.Id))
-                throw new UrlShortenerApplicationException("User with such id does not exist.");
+                throw new UrlShortenerApplicationException
+                    (new Dictionary<string, List<string>> { ["Id"] = new List<string> { "User with such id does not exist." } });
 
             _unitOfWork.UserRepository.Delete(entity);
             await _unitOfWork.SaveChangesAsync();

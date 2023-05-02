@@ -1,10 +1,10 @@
 ﻿using BLL.Models;
+using System.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BllInterfaces = BLL.Interfaces;
-using System.Linq;
 
 namespace MvcAngularApp.Controllers
 {
@@ -29,12 +29,12 @@ namespace MvcAngularApp.Controllers
                 return View(model);
 
             var claims = await _authenticationService.SignInAsync(model);
-            if (claims != null)
+            if (claims.Claims.Any())
             {
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claims);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "Invalid email or password.");
+            ModelState.AddModelError("Password", "Invalid Username or password.");
             return View(model);
 
         }
@@ -53,6 +53,8 @@ namespace MvcAngularApp.Controllers
 
             if (await _authenticationService.SignUp(model))
                 return RedirectToAction("SignIn", "Auth");
+            ModelState.AddModelError("Username", "Username already taken.");
+
             return View(model);
         }
 

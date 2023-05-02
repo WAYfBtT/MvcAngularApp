@@ -10,7 +10,7 @@ namespace BLL.Models
 {
     public class UrlModel<TUserModelKey> : BaseModel
     {
-        [Required]
+        [Required(ErrorMessage = "Should not be empty.")]
         [MaxLength(2048)]
         [RegularExpression(@"^(https?://)([^\s/:?#]+\.?)+([/:?#]|$)")]
         public string LongUrl { get; set; }

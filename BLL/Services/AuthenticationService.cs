@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using System;
@@ -24,11 +25,17 @@ namespace BLL.Services
 
         public async Task<ClaimsPrincipal> SignInAsync(SignInModel model)
         {
+
             var user = await _userService.GetByUserNameAsync(model.Username);
 
             var claims = new List<Claim>();
 
-            if (user == null || user.Password != model.Password) return null;
+            if (user == null || user.Password != model.Password)
+                return new ClaimsPrincipal(new ClaimsIdentity(
+                claims,
+                "ApplicationCookie",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType));
 
             claims.AddRange(new List<Claim>
             {
@@ -49,13 +56,11 @@ namespace BLL.Services
         public async Task<bool> SignUp(SignUpModel model)
         {
             var user = await _userService.GetByUserNameAsync(model.Username);
-            if (user == null)
-            {
-                var userModel = _mapper.Map<UserModel>(model);
-                await _userService.AddAsync(userModel);
-                return true;
-            }
-            return false;
+            if (user != null)
+                return false;
+            var userModel = _mapper.Map<UserModel>(model);
+            await _userService.AddAsync(userModel);
+            return true;
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace BLL.Exceptions
 {
     public class UrlShortenerApplicationException : Exception
     {
-        public UrlShortenerApplicationException()
+        public Dictionary<string, List<string>> Errors { get; protected set; }
+        public UrlShortenerApplicationException(Dictionary<string, List<string>> errors)
         {
+            Errors = errors;
         }
 
         public UrlShortenerApplicationException(string message) : base(message)
