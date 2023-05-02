@@ -26,7 +26,8 @@ namespace BLL.Services
         {
             var entity = _mapper.Map<Url>(model);
             if (await _unitOfWork.UrlRepository.AnyAsync(x => x.LongUrl == entity.LongUrl))
-                throw new UrlShortenerApplicationException("Such url already exists.");
+                throw new UrlShortenerApplicationException(new Dictionary<string, List<string>> { ["LongUrl"] = new List<string> { "Such url already exists." } });
+           
 
             entity.ShortUrl = _shortenerService.ShortenUrl(entity.LongUrl);
 
@@ -38,7 +39,8 @@ namespace BLL.Services
         public async Task DeleteByIdAsync(int id)
         {
             if (!(await _unitOfWork.UrlRepository.AnyAsync(x => x.Id == id)))
-                throw new UrlShortenerApplicationException("Url with such id does not exist.");
+                throw new UrlShortenerApplicationException
+                    (new Dictionary<string, List<string>> { ["Id"] = new List<string> { "Url with such id does not exist." } });
 
             await _unitOfWork.UrlRepository.DeleteByIdAsync(id);
             await _unitOfWork.SaveChangesAsync();
@@ -48,7 +50,8 @@ namespace BLL.Services
         {
             var entity = _mapper.Map<Url>(model);
             if (await _unitOfWork.UrlRepository.AnyAsync(x => x.Id == model.Id))
-                throw new UrlShortenerApplicationException("Url with such id does not exist.");
+                throw new UrlShortenerApplicationException(
+                    new Dictionary<string, List<string>> { ["Id"] = new List<string> { "Url with such id does not exist." } });
 
             _unitOfWork.UrlRepository.Delete(entity);
             await _unitOfWork.SaveChangesAsync();

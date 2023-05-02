@@ -17,10 +17,8 @@ namespace BLL.Mapper
                 opt => opt.MapFrom(src => src.Urls.Select(x => x.Id))
                 );
             CreateMap<UserModel, User>()
-                .ForMember(
-                dest => dest.Urls,
-                opt => opt.MapFrom(src => src.UrlIds.Select(x => new Url { Id = x }))
-                );
+                .ForMember(dest => dest.Urls, opt => opt.MapFrom(src => src.UrlIds.Select(x => new Url { Id = x })))
+                .ForMember(dest => dest.UsernameNormalized, opt => opt.MapFrom(src => src.Username.Normalize()));
             CreateMap<SignInModel, UserModel>();
             CreateMap<SignUpModel, UserModel>();
         }

@@ -9,13 +9,10 @@ namespace BLL.Models
 {
     public class SignInModel
     {
-        [Required]
-        [MinLength(5, ErrorMessage = "Not less than 5 letters.")]
-        [MaxLength(64, ErrorMessage = "No more than 64 letters.")]
+        [Required(ErrorMessage = "Should not be empty.")]
         public string Username { get; set; }
-        [Required]
-        [MinLength(8, ErrorMessage = "Not less than 8 letters.")]
-        [MaxLength(128, ErrorMessage = "Not less than 128 letters.")]
+
+        [Required(ErrorMessage = "Should not be empty.")]
         public string Password { get; set; }
     }
 }
